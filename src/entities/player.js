@@ -16,6 +16,7 @@ export function makePlayer(k) {
     {
       speed: 150,
       isAttacking: false,
+      swordHitbox: null,
       setPosition(x, y) {
         this.pos.x = x;
         this.pos.y = y;
@@ -32,7 +33,7 @@ export function makePlayer(k) {
 
         this.controlHandlers.push(
           k.onKeyPress((key) => {
-            if (key === "x") {
+            if (key === "x" || key === "space") {
               if (this.curAnim() !== "jump") this.play("jump");
               this.doubleJump();
             }
@@ -43,30 +44,19 @@ export function makePlayer(k) {
               this.isGrounded()
             ) {
               this.isAttacking = true;
-              this.add([
+              this.swordHitbox = this.add([
                 k.pos(this.flipX ? -25 : 0, 10),
                 k.area({ shape: new k.Rect(k.vec2(0), 25, 10) }),
                 "sword-hitbox",
               ]);
               this.play("attack");
-
-              this.onAnimEnd((anim) => {
-                if (anim === "attack") {
-                  const swordHitbox = k.get("sword-hitbox", {
-                    recursive: true,
-                  })[0];
-                  if (swordHitbox) k.destroy(swordHitbox);
-                  this.isAttacking = false;
-                  this.play("idle");
-                }
-              });
             }
           })
         );
 
         this.controlHandlers.push(
           k.onKeyDown((key) => {
-            if (key === "left" && !this.isAttacking) {
+            if ((key === "left" || key === "a") && !this.isAttacking) {
               if (this.curAnim() !== "run" && this.isGrounded()) {
                 this.play("run");
               }
@@ -75,7 +65,7 @@ export function makePlayer(k) {
               return;
             }
 
-            if (key === "right" && !this.isAttacking) {
+            if ((key === "right" || key === "d") && !this.isAttacking) {
               if (this.curAnim() !== "run" && this.isGrounded()) {
                 this.play("run");
               }
@@ -153,6 +143,13 @@ export function makePlayer(k) {
         });
 
         this.onAnimEnd((anim) => {
+          if (anim === "attack") {
+            if (this.swordHitbox) k.destroy(this.swordHitbox);
+            this.swordHitbox = null;
+            this.isAttacking = false;
+            if (this.isGrounded()) this.play("idle");
+          }
+
           if (anim === "explode") {
             k.go("room1");
           }

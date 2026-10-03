@@ -1,6 +1,9 @@
 export function makeNotificationBox(k, content) {
+  const lines = content.split("\n").length;
+  const width = Math.min(560, k.width() - 32);
+  const fontSize = lines > 3 ? 24 : 32;
   const container = k.make([
-    k.rect(480, 100),
+    k.rect(width, Math.max(100, lines * fontSize * 1.5 + 32)),
     k.color(k.Color.fromHex("#20214a")),
     k.fixed(),
     k.pos(k.center()),
@@ -15,7 +18,9 @@ export function makeNotificationBox(k, content) {
   container.add([
     k.text(content, {
       font: "glyphmesss",
-      size: 32,
+      size: fontSize,
+      width: width - 32,
+      align: "center",
     }),
     k.color(k.Color.fromHex("#eacfba")),
     k.area(),

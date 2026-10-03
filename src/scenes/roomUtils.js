@@ -171,6 +171,7 @@ export function setCameraZones(k, map, cameras) {
 }
 
 export function setExitZones(k, map, exits, destinationName) {
+  let isTransitioning = false;
   for (const exit of exits) {
     const exitZone = map.add([
       k.pos(exit.x, exit.y),
@@ -183,6 +184,8 @@ export function setExitZones(k, map, exits, destinationName) {
     ]);
 
     exitZone.onCollide("player", async () => {
+      if (isTransitioning) return;
+      isTransitioning = true;
       const background = k.add([
         k.pos(-k.width(), 0),
         k.rect(k.width(), k.height()),

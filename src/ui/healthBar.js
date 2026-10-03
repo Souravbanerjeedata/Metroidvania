@@ -14,6 +14,8 @@ function makeHealthBar(k) {
         3: 0,
       },
       setEvents() {
+        if (this.hasUpdateHandler) return;
+        this.hasUpdateHandler = true;
         this.on("update", () => {
           const currentHp = state.current().playerHp;
           if (currentHp === 0) {
