@@ -4,7 +4,7 @@ export function makeNotificationBox(k, content) {
   const fontSize = lines > 3 ? 24 : 32;
   const container = k.make([
     k.rect(width, Math.max(100, lines * fontSize * 1.5 + 32)),
-    k.color(k.Color.fromHex("#20214a")),
+    k.color(k.Color.fromHex("#162331")),
     k.fixed(),
     k.pos(k.center()),
     k.area(),
@@ -22,7 +22,7 @@ export function makeNotificationBox(k, content) {
       width: width - 32,
       align: "center",
     }),
-    k.color(k.Color.fromHex("#eacfba")),
+    k.color(k.Color.fromHex("#f0dfb3")),
     k.area(),
     k.anchor("center"),
   ]);

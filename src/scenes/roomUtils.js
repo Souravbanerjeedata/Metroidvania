@@ -32,7 +32,7 @@ export function setMapColliders(k, map, colliders) {
     if (collider.name === "boss-barrier") {
       const bossBarrier = map.add([
         k.rect(collider.width, collider.height),
-        k.color(k.Color.fromHex("#eacfba")),
+        k.color(k.Color.fromHex("#f0dfb3")),
         k.pos(collider.x, collider.y),
         k.area({
           collisionIgnore: ["collider"],
@@ -189,7 +189,7 @@ export function setExitZones(k, map, exits, destinationName) {
       const background = k.add([
         k.pos(-k.width(), 0),
         k.rect(k.width(), k.height()),
-        k.color("#20214a"),
+        k.color("#162331"),
       ]);
 
       await k.tween(

@@ -4,58 +4,86 @@ import { room2 } from "./scenes/room2.js";
 import { setBackgroundColor } from "./scenes/roomUtils.js";
 import { makeNotificationBox } from "./ui/notificationBox.js";
 
-function addIntroText(k, content, y, size, color = "#eacfba", width = 560) {
+function addIntroText(
+  k,
+  content,
+  x,
+  y,
+  size,
+  color = "#f0dfb3",
+  width = 560,
+  align = "center"
+) {
   k.add([
-    k.text(content, { font: "glyphmesss", size, width, align: "center" }),
+    k.text(content, { font: "glyphmesss", size, width, align }),
     k.color(k.Color.fromHex(color)),
     k.fixed(),
-    k.pos(k.center().x, y),
-    k.anchor("center"),
+    k.pos(x, y),
+    k.anchor(align === "left" ? "left" : "center"),
   ]);
 }
 
 function makeIntroScreen(k) {
-  setBackgroundColor(k, "#111329");
+  setBackgroundColor(k, "#1b303c");
 
   k.add([
     k.rect(600, 320),
-    k.color(k.Color.fromHex("#20214a")),
+  k.color(k.Color.fromHex("#162331")),
     k.fixed(),
     k.pos(k.center()),
     k.anchor("center"),
   ]);
   k.add([
     k.rect(600, 4),
-    k.color(k.Color.fromHex("#eacfba")),
+    k.color(k.Color.fromHex("#49d6bb")),
     k.fixed(),
     k.pos(k.center().x, k.center().y - 158),
     k.anchor("center"),
   ]);
 
-  addIntroText(k, "INTRUDER ALERT  /  SECTOR 07", k.center().y - 125, 12, "#a2aed5");
-  addIntroText(k, "ESCAPE THE FACTORY", k.center().y - 86, 28);
-  addIntroText(k, "Fight through the facility. Find a way out.", k.center().y - 49, 14, "#a2aed5");
+  const center = k.center();
+  k.add([
+    k.circle(48),
+    k.color(k.Color.fromHex("#49d6bb")),
+    k.opacity(0.14),
+    k.fixed(),
+    k.pos(center.x - 185, center.y + 22),
+    k.anchor("center"),
+  ]);
+  k.add([
+    k.sprite("player", { anim: "idle" }),
+    k.scale(3),
+    k.fixed(),
+    k.pos(center.x - 185, center.y + 22),
+    k.anchor("center"),
+  ]);
+
+  addIntroText(k, "EMERGENCY BROADCAST  /  07", center.x, center.y - 128, 11, "#90b7a5");
+  addIntroText(k, "ESCAPE THE FACTORY", center.x, center.y - 98, 26);
+  addIntroText(k, "Find the burner boss to unlock double jump, then escape.", center.x, center.y - 71, 10, "#90b7a5", 540);
+  addIntroText(k, "RECOVERY UNIT 01", center.x - 185, center.y + 87, 10, "#49d6bb", 160);
 
   const controls = [
-    { x: k.center().x - 180, title: "MOVE", keys: "ARROWS   /   A  D" },
-    { x: k.center().x, title: "JUMP", keys: "X   /   SPACE" },
-    { x: k.center().x + 180, title: "ATTACK", keys: "Z" },
+    { title: "MOVE", detail: "Left / Right Arrows or A / D" },
+    { title: "JUMP", detail: "X or Space; press again in air after unlock" },
+    { title: "ATTACK", detail: "Z; strike enemies in front of you" },
   ];
 
-  for (const control of controls) {
+  controls.forEach((control, index) => {
+    const rowY = center.y - 26 + index * 49;
     k.add([
-      k.rect(168, 58),
-      k.color(k.Color.fromHex("#171a38")),
+      k.rect(348, 42),
+      k.color(k.Color.fromHex("#203541")),
       k.fixed(),
-      k.pos(control.x, k.center().y + 25),
+      k.pos(center.x + 112, rowY),
       k.anchor("center"),
     ]);
-    addIntroText(k, control.title, k.center().y + 12, 12, "#a2aed5", 150);
-    addIntroText(k, control.keys, k.center().y + 38, 13, "#eacfba", 160);
-  }
+    addIntroText(k, control.title, center.x - 48, rowY - 7, 9, "#49d6bb", 300, "left");
+    addIntroText(k, control.detail, center.x - 48, rowY + 7, 10, "#f0dfb3", 300, "left");
+  });
 
-  addIntroText(k, "PRESS ENTER TO BEGIN", k.center().y + 112, 16, "#eacfba");
-  addIntroText(k, "A short adventure through a very long shift.", k.center().y + 142, 10, "#a2aed5");
+  addIntroText(k, "PRESS ENTER TO BEGIN", center.x, center.y + 125, 14, "#f0dfb3");
+  addIntroText(k, "Health pickups restore one heart", center.x, center.y + 147, 9, "#90b7a5");
 }
 
 async function main() {
@@ -70,7 +98,7 @@ async function main() {
   });
 
   k.scene("final-exit", () => {
-    setBackgroundColor(k, "#20214a");
+    setBackgroundColor(k, "#162331");
     k.add(
       makeNotificationBox(
         k,

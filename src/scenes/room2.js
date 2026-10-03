@@ -10,7 +10,7 @@ import {
 } from "./roomUtils.js";
 
 export function room2(k, roomData, previousSceneData) {
-  setBackgroundColor(k, "#a2aed5");
+  setBackgroundColor(k, "#789996");
 
   k.camScale(4);
   k.camPos(170, 100);

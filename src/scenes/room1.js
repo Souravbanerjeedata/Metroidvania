@@ -18,7 +18,7 @@ export async function room1(
   roomData,
   previousSceneData = { exitName: null }
 ) {
-  setBackgroundColor(k, "#a2aed5");
+  setBackgroundColor(k, "#789996");
 
   k.camScale(4);
   k.camPos(170, 100);

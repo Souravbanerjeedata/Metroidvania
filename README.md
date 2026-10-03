@@ -2,6 +2,8 @@
 
 A compact pixel-art action platformer built with JavaScript and Kaboom.js. Explore connected factory rooms, fight patrol drones, defeat the burner boss, unlock a double jump, and find the exit.
 
+The visual identity uses deep petrol shadows, sea-glass metal, and ember accents. The player is a mint-and-teal recovery robot, and the enemy sprites, room artwork, pickups, effects, and HUD share the updated palette. The intro explains each control and the double-jump unlock.
+
 **[Play the game](https://souravbanerjeedata.github.io/Metroidvania/)**
 
 ![Gameplay screenshot](./screenshot.png)
@@ -11,8 +13,10 @@ A compact pixel-art action platformer built with JavaScript and Kaboom.js. Explo
 | Action | Keyboard |
 | --- | --- |
 | Move | Left / Right arrows or **A / D** |
-| Jump and double jump | **X** or **Space** |
-| Attack | **Z** |
+| Jump | **X** or **Space** |
+| Double jump | Press **X** or **Space** again in midair after defeating the boss |
+| Attack enemies in front | **Z** |
+| Restore one heart | Collect a glowing health pickup |
 | Start | **Enter** |
 
 ## Run locally
